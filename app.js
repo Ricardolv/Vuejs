@@ -7,9 +7,24 @@ new Vue({
   data: {
       cervejarias: [],
       openDetails: [],
+      sortColumn: 'name',
+      sortInverse: false
   },
 
   methods: {
+
+    doSort: function(ev, column) {
+
+      ev.preventDefault();
+
+      var self = this;
+
+      self.sortColumn = column;
+
+      self.$set('sortInverse', !self.sortInverse);
+
+    },
+
     doOpenDetails: function(ev, id) {
 
       //link não será seguido
@@ -20,7 +35,7 @@ new Vue({
         index = self.openDetails.indexOf(id);
 
         if(index > -1) {
-          self.openDetails.$remove(index);
+          self.openDetails.$remove(id);
         }  else {
           self.openDetails.push(id);
         }
