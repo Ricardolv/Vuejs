@@ -15,6 +15,7 @@ new Vue({
   //objeto chamado data
   data: {
       filterTerm:'',
+      all: [],
       cervejarias: [],
       openDetails: [],
       sortColumn: 'name',
@@ -25,7 +26,21 @@ new Vue({
 
     doFilter: function(ev) {
 
-      this.$set('filterTerm', ev.currentTarget.value);
+      var self = this,
+
+      filtered = self.all;
+
+      if (self.filterTerm != '') {
+        
+          filtered = _.filter(self.all, function(cervejaria) {
+
+              return cervejaria.name.toLowerCase().indexOf(self.filterTerm.toLowerCase()) > -1
+          });
+      }
+
+
+      self.$set('cervejarias', filtered);
+
 
     },
 
@@ -80,7 +95,8 @@ new Vue({
 
     self.$http.get('http://localhost:9001/cervejarias.json', function(response) {
 
-        self.cervejarias = response;
+        self.$set('cervejarias', response);
+        self.$set('all', response);
 
     });
 
