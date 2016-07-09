@@ -14,6 +14,7 @@ new Vue({
 
   //objeto chamado data
   data: {
+      filterTerm:'',
       cervejarias: [],
       openDetails: [],
       sortColumn: 'name',
@@ -21,6 +22,12 @@ new Vue({
   },
 
   methods: {
+
+    doFilter: function(ev) {
+
+      this.$set('filterTerm', ev.currentTarget.value);
+
+    },
 
     doSort: function(ev, column) {
 
