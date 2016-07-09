@@ -49,15 +49,19 @@
                     <td>
                         <a href="#" v-on="click:doOpenDetails($event, cervejaria.id)">
                           <i class="fa"
+                             v-show="cervejaria.descript != ''"
                              v-class="
                              fa-plus-square:openDetails.indexOf(cervejaria.id) == -1,
                              fa-minus-square:openDetails.indexOf(cervejaria.id) > -1">
                            </i>
                         </a>
+                        <i class="fa fa-plus-square"
+                           v-show="cervejaria.descript == ''"
+                           style="opacity:0.3">
                     </td>
                   </tr>
-                  <tr v-show="openDetails.indexOf(cervejaria.id) > -1">
-                    <td colspan="6">{{ cervejaria.descript}}</td>
+                  <tr v-show="openDetails.indexOf(cervejaria.id) > -1 && cervejaria.descript != ''">
+                    <td colspan="6">{{ cervejaria.descript }}</td>
                   </tr>
 
                 </tbody>
