@@ -11,6 +11,11 @@
         <div class="container" id="beerApp">
             <h1>Bem vindo ao Vue.js</h1>
 
+            <div class="well">
+                <pre>
+                  {{ $data.openDetails | json }}
+                </pre>
+            </div>
 
             <table class="table table-bordered table-hover table-striped">
                 <thead>
@@ -20,7 +25,11 @@
                     <th>State</th>
                     <th>Country</th>
                     <th>Atualizado em</th>
-                    <th width="1%" nowrap>o</th>
+                    <th width="1%" nowrap>
+                        <a href="#">
+                          <i class="fa fa-plus-square"></i>
+                        </a>
+                    </th>
 
                   </tr>
                 </thead>
@@ -31,9 +40,13 @@
                     <td>{{ cervejaria.state }}</td>
                     <td>{{ cervejaria.country }}</td>
                     <td>{{ cervejaria.last_mod }}</td>
-                    <td>o</td>
+                    <td>
+                        <a href="#" v-on="click:doOpenDetails($event, cervejaria.id)">
+                          <i class="fa fa-plus-square"></i>
+                        </a>
+                    </td>
                   </tr>
-                  <tr>
+                  <tr v-show="openDetails.indexOf(cervejaria.id) > -1">
                     <td colspan="6">{{ cervejaria.descript}}</td>
                   </tr>
 

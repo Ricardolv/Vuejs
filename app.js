@@ -5,7 +5,27 @@ new Vue({
 
   //objeto chamado data
   data: {
-      cervejarias: []
+      cervejarias: [],
+      openDetails: [],
+  },
+
+  methods: {
+    doOpenDetails: function(ev, id) {
+
+      //link não será seguido
+      ev.preventDefault();
+
+      var self = this,
+
+        index = self.openDetails.indexOf(id);
+
+        if(index > -1) {
+          self.openDetails.$remove(index);  
+        }  else {
+          self.openDetails.push(id);
+        }
+
+    }
   },
 
   ready: function() {
