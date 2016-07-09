@@ -11,11 +11,13 @@
         <div class="container" id="beerApp">
             <h1>Bem vindo ao Vue.js</h1>
 
+          <!--
             <div class="well">
                 <pre>
                   {{ $data.openDetails | json }}
                 </pre>
             </div>
+          -->
 
             <table class="table table-bordered table-hover table-striped">
                 <thead>
@@ -26,8 +28,12 @@
                     <th>Country</th>
                     <th>Atualizado em</th>
                     <th width="1%" nowrap>
-                        <a href="#">
-                          <i class="fa fa-plus-square"></i>
+                        <a href="#" v-on="click:openAllDetails">
+                          <i class="fa fa-plus-square"
+                             v-class="
+                              fa-plus-square:openDetails.length == 0,
+                              fa-minus-square:openDetails.length > 0 ">
+                          </i>
                         </a>
                     </th>
 
@@ -42,7 +48,11 @@
                     <td>{{ cervejaria.last_mod }}</td>
                     <td>
                         <a href="#" v-on="click:doOpenDetails($event, cervejaria.id)">
-                          <i class="fa fa-plus-square"></i>
+                          <i class="fa"
+                             v-class="
+                             fa-plus-square:openDetails.indexOf(cervejaria.id) == -1,
+                             fa-minus-square:openDetails.indexOf(cervejaria.id) > -1">
+                           </i>
                         </a>
                     </td>
                   </tr>
@@ -60,6 +70,7 @@
         <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
         <script src="node_modules/vue/dist/vue.js"></script>
         <script src="node_modules/vue-resource/dist/vue-resource.js"></script>
+        <script src="/node_modules/lodash/index.js"></script>
         <script src="app.js"></script>
   </body>
 </html>

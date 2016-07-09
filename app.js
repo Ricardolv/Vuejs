@@ -20,13 +20,29 @@ new Vue({
         index = self.openDetails.indexOf(id);
 
         if(index > -1) {
-          self.openDetails.$remove(index);  
+          self.openDetails.$remove(index);
         }  else {
           self.openDetails.push(id);
         }
 
-    }
+    },
+
+    openAllDetails: function(ev) {
+
+            ev.preventDefault();
+
+            var self = this;
+
+            if(self.openDetails.length > 0)
+            {
+                self.$set('openDetails', []);
+            } else {
+                self.$set('openDetails', _.pluck(self.cervejarias.list, 'id'));
+            }
+     }
+
   },
+
 
   ready: function() {
     var self = this;
