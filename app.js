@@ -1,3 +1,12 @@
+Vue.filter('dateFormat', function(value, formatString) {
+
+  if (formatString != undefined) {
+    return  moment(value).format(formatString);
+  }
+  return  moment(value).format('DD/MM/YYYY HH:mm:ss');
+
+});
+
 
 new Vue({
 

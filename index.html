@@ -80,7 +80,7 @@
                     <td>{{ cervejaria.city }}</td>
                     <td>{{ cervejaria.state }}</td>
                     <td>{{ cervejaria.country }}</td>
-                    <td>{{ cervejaria.last_mod }}</td>
+                    <td>{{ cervejaria.last_mod | dateFormat 'DD/MM/YYYY HH:mm:ss' }}</td>
                     <td>
                         <a href="#"
                            v-show="cervejaria.descript != ''"
@@ -110,6 +110,7 @@
         <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
         <script src="node_modules/vue/dist/vue.js"></script>
         <script src="node_modules/vue-resource/dist/vue-resource.js"></script>
+        <script src="/node_modules/moment/moment.js"></script>
         <script src="/node_modules/lodash/index.js"></script>
         <script src="app.js"></script>
   </body>
