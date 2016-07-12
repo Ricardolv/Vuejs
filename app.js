@@ -103,6 +103,14 @@ new Vue({
 
     });
 
+    jQuery(self.$$.columnsToFilterSelect).select2({
+      placeholder: 'Selecionar uma ou mais colunas para filtrar !'
+    }).on('change', function() {
+
+        self.$set('columnsToFilter', jQuery(this).val());
+
+    });
+
   }
 
 });
