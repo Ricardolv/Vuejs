@@ -47,6 +47,15 @@ new Vue({
 
     page: function(ev, page) {
 
+      ev.preventDefault();
+
+      var self = this;
+
+      self.pagination.$set('currentPage', page);
+
+      self.cervejarias.$set('list', self.cervejarias.paginated[page-1]);
+
+
     },
 
     next: function(ev) {
@@ -164,15 +173,15 @@ new Vue({
 
         var chunk = _.chunk(response, self.pagination.perPage);
 
-
-
         self.cervejarias.$set('paginated', chunk);
         self.cervejarias.$set('all', response);
         self.cervejarias.$set('list', chunk[0]);
 
-        self.pagination.$set('totalItens', response.lenght);
-        self.pagination.$set('totalPages', Math.ceil(response.lenght / self.pagination.perPage));
 
+        self.pagination.$set('totalItens', response.length);
+        self.pagination.$set('totalPages', Math.ceil(response.length / self.pagination.perPage));
+
+        self.pagination.$set('pageNumbers', _.range(1, self.pagination.totalPages+1));
     });
 
     self.controls.select2 = jQuery(self.$$.columnsToFilterSelect).select2({

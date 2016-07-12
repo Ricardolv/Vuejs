@@ -160,10 +160,24 @@
                         </tbody>
                     </table>
 
-                    <p class="text-center">
-                        [ <a href="#" v-on="click:previous">anterior</a>|
-                          <a href="#" v-on="click:next">próxima</a> ]
-                    </p>
+                    <nav>
+                        <ul class="pagination">
+                          <li>
+                            <a href="#" v-on="click:previous" aria-label="Previous">
+                              <span aria-hidden="true">&laquo;</span>
+                            </a>
+                          </li>
+                          <li v-repeat="pagination.pageNumbers">
+                            <a href="#" v-on="click:page($event, $value)">{{ $value }}</a>
+                          </li>
+
+                          <li>
+                            <a href="#" v-on="click:next" aria-label="Next">
+                              <span aria-hidden="true">&raquo;</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
 
                 </div>
 
