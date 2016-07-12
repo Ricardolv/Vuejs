@@ -20,12 +20,29 @@
 
 
           <div class="well">
-              <input
-                  v-model="filterTerm"
-                  v-on="keyup:doFilter "
-                  type="text"
-                  placeholder="Digite o termo para filtrar a lista"
-                  class="form-control">
+              <div clall="row">
+                  <div class="col-md-6">
+                    <input
+                        v-model="filterTerm"
+                        v-on="keyup:doFilter "
+                        type="text"
+                        placeholder="Digite o termo para filtrar a lista"
+                        class="form-control">
+
+                  </div>
+                  <div class="col-md-6">
+                      <select
+                          v-model="columnsToFilter"
+                          multiple
+                          class="form-control">
+                          <option value="name">Nome</option>
+                          <option value="city">Cidade</option>
+                          <option value="state">Estado</option>
+                          <option value="country">País</option>
+                      </select>
+                  </div>
+              </div>
+
           </div>
 
             <table class="table table-bordered table-hover table-striped">

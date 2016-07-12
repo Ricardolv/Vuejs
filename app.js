@@ -14,6 +14,7 @@ new Vue({
 
   //objeto chamado data
   data: {
+      columnsToFilter: [],
       filterTerm:'',
       all: [],
       cervejarias: [],
@@ -27,14 +28,16 @@ new Vue({
     doFilter: function(ev) {
 
       var self = this,
-
       filtered = self.all;
 
-      if (self.filterTerm != '') {
-        
+      if (self.filterTerm != '' && self.columnsToFilter.length > 0) {
+
           filtered = _.filter(self.all, function(cervejaria) {
 
-              return cervejaria.name.toLowerCase().indexOf(self.filterTerm.toLowerCase()) > -1
+                return self.columnsToFilter.some(function(column) {
+                    return cervejaria[column].toLowerCase().indexOf(self.filterTerm.toLowerCase()) > -1
+                });
+
           });
       }
 
