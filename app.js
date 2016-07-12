@@ -14,6 +14,7 @@ new Vue({
 
   //objeto chamado data
   data: {
+      visibleColumns: ['name', 'last_mod'],
       columnsToFilter: [],
       filterTerm:'',
       all: [],
