@@ -45,6 +45,21 @@ new Vue({
 
   methods: {
 
+    setPaginationData: function(list) {
+
+      var self = this,
+      chunk = _.chunk(list, self.pagination.perPage);
+
+      self.cervejarias.$set('paginated', chunk);
+      self.cervejarias.$set('list', chunk[0]);
+
+      self.pagination.$set('currentPage', 1);
+      self.pagination.$set('totalItens', list.length);
+      self.pagination.$set('totalPages', Math.ceil(list.length / self.pagination.perPage));
+      self.pagination.$set('pageNumbers', _.range(1, self.pagination.totalPages+1));
+
+    },
+
     page: function(ev, page) {
 
       ev.preventDefault();
@@ -92,11 +107,11 @@ new Vue({
         self.interaction.$set('visibleColumns', ['name', 'last_mod']);
         self.interaction.$set('columnsToFilter', []);
         self.interaction.$set('filterTerm', '');
-        self.cervejarias.$set('list', self.cervejarias.all);
         self.interaction.$set('openDetails', []);
         self.interaction.$set('sortColumn', 'name');
         self.interaction.$set('sortInverse', false);
 
+        self.setPaginationData(self.cervejarias.all);
         self.controls.select2.val('').trigger('change');
     },
 
@@ -116,8 +131,8 @@ new Vue({
           });
       }
 
-      self.cervejarias.$set('list', filtered);
 
+      self.setPaginationData(filtered);
     },
 
     doSort: function(ev, column) {
@@ -171,17 +186,9 @@ new Vue({
 
     self.$http.get('http://localhost:9001/cervejarias.json', function(response) {
 
-        var chunk = _.chunk(response, self.pagination.perPage);
-
-        self.cervejarias.$set('paginated', chunk);
         self.cervejarias.$set('all', response);
-        self.cervejarias.$set('list', chunk[0]);
 
-
-        self.pagination.$set('totalItens', response.length);
-        self.pagination.$set('totalPages', Math.ceil(response.length / self.pagination.perPage));
-
-        self.pagination.$set('pageNumbers', _.range(1, self.pagination.totalPages+1));
+        self.setPaginationData(response);
     });
 
     self.controls.select2 = jQuery(self.$$.columnsToFilterSelect).select2({
