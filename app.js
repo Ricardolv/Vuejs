@@ -17,12 +17,14 @@ new Vue({
       cervejarias: {
             all: [],
             list: [],
+            paginated: []
       },
       pagination: {
+          perPage: 6,
           currentPage: 1,
           totalPages: 0,
           totalItens: 0,
-          pageNumbers: [],
+          pageNumbers: []
 
       },
       interaction: {
@@ -32,7 +34,7 @@ new Vue({
               cervejarias: [],
               openDetails: [],
               sortColumn: 'name',
-              sortInverse: false,
+              sortInverse: false
       },
       controls: {
         select2: null,
@@ -42,6 +44,38 @@ new Vue({
   },
 
   methods: {
+
+    page: function(ev, page) {
+
+    },
+
+    next: function(ev) {
+
+        ev.preventDefault();
+
+        var self = this;
+
+        if (self.pagination.currentPage == self.pagination.totalPages) {
+            return false;
+        }
+
+        self.pagination.$set('currentPage', self.pagination.currentPage  + 1);
+        self.cervejarias.$set('list', self.cervejarias.paginated[self.pagination.currentPage-1]);
+    },
+
+    previous: function(ev) {
+
+        ev.preventDefault();
+
+        var self = this;
+
+        if (self.pagination.currentPage == 1) {
+          return false;
+        }
+
+        self.pagination.$set('currentPage', self.pagination.currentPage  - 1);
+        self.cervejarias.$set('list', self.cervejarias.paginated[self.pagination.currentPage-1]);
+    },
 
     doResetAll: function() {
         var self = this;
@@ -128,8 +162,16 @@ new Vue({
 
     self.$http.get('http://localhost:9001/cervejarias.json', function(response) {
 
-        self.cervejarias.$set('list', response);
+        var chunk = _.chunk(response, self.pagination.perPage);
+
+
+
+        self.cervejarias.$set('paginated', chunk);
         self.cervejarias.$set('all', response);
+        self.cervejarias.$set('list', chunk[0]);
+
+        self.pagination.$set('totalItens', response.lenght);
+        self.pagination.$set('totalPages', Math.ceil(response.lenght / self.pagination.perPage));
 
     });
 
