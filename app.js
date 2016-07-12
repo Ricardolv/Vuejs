@@ -14,6 +14,7 @@ new Vue({
 
   //objeto chamado data
   data: {
+      select2: null,
       visibleColumns: ['name', 'last_mod'],
       columnsToFilter: [],
       filterTerm:'',
@@ -25,6 +26,20 @@ new Vue({
   },
 
   methods: {
+
+    doResetAll: function() {
+        var self = this;
+
+        self.$set('visibleColumns', ['name', 'last_mod']);
+        self.$set('columnsToFilter', []);
+        self.$set('filterTerm', '');
+        self.$set('cervejarias', self.all);
+        self.$set('openDetails', []);
+        self.$set('sortColumn', 'name');
+        self.$set('sortInverse', false);
+
+        self.select2.val('').trigger('change');
+    },
 
     doFilter: function(ev) {
 
@@ -104,7 +119,7 @@ new Vue({
 
     });
 
-    jQuery(self.$$.columnsToFilterSelect).select2({
+    self.select2 = jQuery(self.$$.columnsToFilterSelect).select2({
       placeholder: 'Selecionar uma ou mais colunas para filtrar !'
     }).on('change', function() {
 
