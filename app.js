@@ -14,6 +14,14 @@ new Vue({
 
   //objeto chamado data
   data: {
+      cervejaria: {
+        name:'',
+        city:'',
+        state:'',
+        country:'',
+        descript:''
+
+      },
       cervejarias: {
             all: [],
             list: [],
@@ -44,6 +52,21 @@ new Vue({
   },
 
   methods: {
+
+    save: function(ev) {
+
+        ev.preventDefault();
+
+      //  this.$http.post('url so serviço', cervejaria, function(response) {
+
+      //  });
+
+        jQuery(this.$$.modal).modal('hide');
+
+        window.alert('Cervejaria salva, seu bebum!');
+        window.console.log(JSON.stringify(this.cervejaria));
+
+    },
 
     new: function() {
 
