@@ -53,6 +53,16 @@ new Vue({
 
   methods: {
 
+    edit: function(ev, cervejaria) {
+
+        ev.preventDefault();
+
+
+        this.$set('cervejaria', cervejaria);
+
+        jQuery(this.$$.modal).modal('show');
+    },
+
     save: function(ev) {
 
         ev.preventDefault();
@@ -70,7 +80,12 @@ new Vue({
 
     new: function() {
 
-        jQuery(this.$$.modal).modal('show');
+        this.Cervejaria.name= '';
+        this.Cervejaria.city= '';
+        this.Cervejaria.state= '';
+        this.Cervejaria.country= '';
+        this.Cervejaria.descript= '';
+
     },
 
     setPaginationData: function(list) {

@@ -183,6 +183,9 @@
                                   </i>
                                 </a>
                             </th>
+                            <th width="1%" nowrap>
+                                <i class="fa fa-fw fa-edit"></i>
+                            </th>
 
                           </tr>
                         </thead>
@@ -206,6 +209,9 @@
                                 <i class="fa fa-plus-square"
                                    v-show="cervejaria.descript == ''"
                                    style="opacity:0.3">
+                            </td>
+                            <td width="1%" nowrap>
+                                <a href="#" v-on="click:edit($event, cervejaria)"><i class="fa fa-fw fa-edit"></i></a>
                             </td>
                           </tr>
                           <tr v-show="interaction.openDetails.indexOf(cervejaria.id) > -1 && cervejaria.descript != ''">
