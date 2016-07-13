@@ -42,7 +42,7 @@ new Vue({
               cervejarias: [],
               openDetails: [],
               sortColumn: 'name',
-              sortInverse: false
+              sortInverse: 0
       },
       controls: {
         select2: null,
@@ -57,10 +57,9 @@ new Vue({
 
         ev.preventDefault();
 
+        Vue.set(this, 'cervejaria', cervejaria )
 
-        this.$set('cervejaria', cervejaria);
-
-        jQuery(this.$$.modal).modal('show');
+        jQuery(this.$els.modal).modal('show');
     },
 
     save: function(ev) {
@@ -71,7 +70,7 @@ new Vue({
 
       //  });
 
-        jQuery(this.$$.modal).modal('hide');
+        jQuery(this.$els.modal).modal('hide');
 
         window.alert('Cervejaria salva, seu bebum!');
         window.console.log(JSON.stringify(this.cervejaria));
@@ -93,13 +92,14 @@ new Vue({
       var self = this,
       chunk = _.chunk(list, self.pagination.perPage);
 
-      self.cervejarias.$set('paginated', chunk);
-      self.cervejarias.$set('list', chunk[0]);
+      Vue.set(self.cervejarias, 'paginated', chunk );
+      Vue.set(self.cervejarias, 'list', chunk[0]);
 
-      self.pagination.$set('currentPage', 1);
-      self.pagination.$set('totalItens', list.length);
-      self.pagination.$set('totalPages', Math.ceil(list.length / self.pagination.perPage));
-      self.pagination.$set('pageNumbers', _.range(1, self.pagination.totalPages+1));
+
+      Vue.set(self.pagination, 'currentPage', 1 );
+      Vue.set(self.pagination, 'totalItens', list.length );
+      Vue.set(self.pagination, 'totalPages', Math.ceil(list.length / self.pagination.perPage) );
+      Vue.set(self.pagination, 'pageNumbers', _.range(1, self.pagination.totalPages+1) );
 
     },
 
@@ -109,10 +109,8 @@ new Vue({
 
       var self = this;
 
-      self.pagination.$set('currentPage', page);
-
-      self.cervejarias.$set('list', self.cervejarias.paginated[page-1]);
-
+      Vue.set(self.pagination, 'currentPage', page );
+      Vue.set(self.cervejarias, 'list', self.cervejarias.paginated[page-1]);
 
     },
 
@@ -126,8 +124,8 @@ new Vue({
             return false;
         }
 
-        self.pagination.$set('currentPage', self.pagination.currentPage  + 1);
-        self.cervejarias.$set('list', self.cervejarias.paginated[self.pagination.currentPage-1]);
+        Vue.set(self.pagination, 'currentPage', self.pagination.currentPage  + 1);
+        Vue.set(self.cervejarias, 'list', self.cervejarias.paginated[self.pagination.currentPage-1]);
     },
 
     previous: function(ev) {
@@ -140,19 +138,19 @@ new Vue({
           return false;
         }
 
-        self.pagination.$set('currentPage', self.pagination.currentPage  - 1);
-        self.cervejarias.$set('list', self.cervejarias.paginated[self.pagination.currentPage-1]);
+        Vue.set(self.pagination, 'currentPage', self.pagination.currentPage  - 1);
+        Vue.set(self.cervejarias, 'list', self.cervejarias.paginated[self.pagination.currentPage-1]);
     },
 
     doResetAll: function() {
         var self = this;
 
-        self.interaction.$set('visibleColumns', ['name', 'last_mod']);
-        self.interaction.$set('columnsToFilter', []);
-        self.interaction.$set('filterTerm', '');
-        self.interaction.$set('openDetails', []);
-        self.interaction.$set('sortColumn', 'name');
-        self.interaction.$set('sortInverse', false);
+        Vue.set(self.interaction, 'visibleColumns', ['name', 'last_mod']);
+        Vue.set(self.interaction, 'columnsToFilter', []);
+        Vue.set(self.interaction, 'filterTerm', '');
+        Vue.set(self.interaction, 'openDetails', []);
+        Vue.set(self.interaction, 'sortColumn', 'name');
+        Vue.set(self.interaction, 'sortInverse', 0);
 
         self.setPaginationData(self.cervejarias.all);
         self.controls.select2.val('').trigger('change');
@@ -186,7 +184,11 @@ new Vue({
 
       self.interaction.sortColumn = column;
 
-      self.interaction.$set('sortInverse', !self.interaction.sortInverse);
+      if (self.interaction.sortInverse == 0) {
+          Vue.set(self.interaction, 'sortInverse', -1);
+      } else {
+          Vue.set(self.interaction, 'sortInverse', 0);
+      }
 
     },
 
@@ -215,9 +217,9 @@ new Vue({
 
             if(self.interaction.openDetails.length > 0)
             {
-                self.interaction.$set('openDetails', []);
+                Vue.set(self.interaction, 'openDetails', []);
             } else {
-                self.interaction.$set('openDetails', _.pluck(self.cervejarias.list, 'id'));
+                Vue.set(self.interaction, 'openDetails', _.pluck(self.cervejarias.list, 'id'));
             }
      }
 
@@ -229,16 +231,16 @@ new Vue({
 
     self.$http.get('http://localhost:9001/cervejarias.json', function(response) {
 
-        self.cervejarias.$set('all', response);
+        Vue.set(self.cervejarias, 'all', response);
 
         self.setPaginationData(response);
     });
 
-    self.controls.select2 = jQuery(self.$$.columnsToFilterSelect).select2({
+    self.controls.select2 = jQuery(self.$els.columnsToFilterSelect).select2({
       placeholder: 'Selecionar uma ou mais colunas para filtrar !'
     }).on('change', function() {
 
-        self.interaction.$set('columnsToFilter', jQuery(this).val());
+        Vue.set(self.interaction, 'columnsToFilter', jQuery(this).val());
 
     });
 
