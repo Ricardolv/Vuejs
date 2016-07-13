@@ -45,6 +45,11 @@ new Vue({
 
   methods: {
 
+    new: function() {
+
+        jQuery(this.$$.modal).modal('show');
+    },
+
     setPaginationData: function(list) {
 
       var self = this,
